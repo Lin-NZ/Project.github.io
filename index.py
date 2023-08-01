@@ -9,7 +9,7 @@
 import openai
 import streamlit as st
 
-API_Key = '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' #API Key from OpenAI (Whisper)
+API_Key = '' #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
 model_id = 'whisper-1' 
 
