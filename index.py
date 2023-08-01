@@ -24,7 +24,7 @@ hide_st_style = '''
     '''
 st.markdown(hide_st_style, unsafe_allow_html = True)
 
-media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'aac', 'mp4'))
+media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
 
 def transcribe_audio():
     if media_file is not None:
