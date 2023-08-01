@@ -1,0 +1,5 @@
+How to make secret key private:
+https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app/connect-to-data-sources/secrets-management
+
+Open Streamlit share:
+https://share.streamlit.io/
