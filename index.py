@@ -14,6 +14,8 @@ openai.api_key = API_Key # Accesing API Key (ChatGPT)
 model_id = 'whisper-1' 
 
 st.title('Test App')
+
+# Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
     <style>
         #MainMenu {visibility : hidden;}
