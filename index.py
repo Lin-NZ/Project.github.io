@@ -15,7 +15,7 @@ model_id = 'whisper-1'
 
 st.title('Test App')
 
-media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'm4a'))
+media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'aac', 'mp4'))
 
 def transcribe_audio():
     if media_file is not None:
