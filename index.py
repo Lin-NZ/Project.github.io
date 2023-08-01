@@ -6,7 +6,7 @@
 
 # python -m streamlit run Whisper.py
 
-import openai
+import OpenAI
 import streamlit as st
 
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
