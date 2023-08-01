@@ -14,13 +14,13 @@ openai.api_key = API_Key # Accesing API Key (ChatGPT)
 model_id = 'whisper-1' 
 
 st.title('Test App')
-hide.st.style = """
+hide_st_style = '''
     <style>
         #MainMenu {visibility : hidden;}
         footer {visibility : hidden;}
     </style
-    """
-st.markdown(hide.st.style, unsafe_allow_html = true)
+    '''
+st.markdown(hide_st_style, unsafe_allow_html = true)
 
 media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'aac', 'mp4'))
 
