@@ -45,5 +45,6 @@ if media_file is not None:  # Check if a file has been uploaded
             model = 'gpt-3.5-turbo',
             messages = [{'role': 'user', 'content': 'summarize in 50 words about ' + transcribe_response}]
         )
-        st.text("\n\nSummary")
+        st.text()
+        st.text("Summary")
         st.write(summary_response['choices'][0]['message']['content'])
