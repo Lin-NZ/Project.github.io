@@ -20,7 +20,7 @@ hide_st_style = '''
         footer {visibility : hidden;}
     </style
     '''
-st.markdown(hide_st_style, unsafe_allow_html = true)
+st.markdown(hide_st_style, unsafe_allow_html = True)
 
 media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'aac', 'mp4'))
 
