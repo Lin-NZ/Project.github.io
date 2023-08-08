@@ -1,0 +1,68 @@
+import streamlit as st
+import time
+import datetime
+
+def main():
+    st.title("錄製與上傳功能網站")
+    option = st.sidebar.selectbox("選擇功能", ("首頁", "錄製", "上傳"))
+
+    if "start_time" not in st.session_state:
+        st.session_state.start_time = None
+        st.session_state.recording = False
+        st.session_state.pause = False
+
+    if option == "首頁":
+        st.write("歡迎使用錄製與上傳功能網站！")
+        st.write("請在側邊欄選擇您想要使用的功能。")
+
+    elif option == "錄製":
+        st.title("錄製")
+        record_btn = st.empty()
+        end_btn = st.empty()
+        pause_btn = st.empty()
+
+        if not st.session_state.recording:
+            if record_btn.button("錄製"):
+                st.session_state.recording = True
+                record_btn.empty()
+                end_btn.button("結束")
+                pause_btn.button("暫停")
+                st.session_state.start_time = time.time()
+                st.session_state.elapsed_time = 0
+        else:
+            if not st.session_state.pause:
+                current_time = datetime.timedelta(seconds=st.session_state.elapsed_time)
+                st.write("計時器：" + str(current_time))
+
+            if pause_btn.button("暫停"):
+                st.session_state.pause = True
+            if st.session_state.pause:
+                record_btn.empty()
+                pause_btn.empty()
+                end_btn.button("繼續")
+            else:
+                end_btn.empty()
+                pause_btn.button("暫停")
+                if end_btn.button("結束"):
+                    st.session_state.recording = False
+                    st.session_state.start_time = None
+                    st.session_state.elapsed_time = 0
+
+        # 在此處添加折線圖的程式碼
+        if st.session_state.recording and not st.session_state.pause:
+            st.button("轉錄")
+            st.button("總結")
+            st.button("下載")
+
+    elif option == "上傳":
+        st.title("上傳")
+        selected_file = st.file_uploader("選擇檔案", type=["csv", "txt"])
+        if selected_file:
+            st.write("已選擇檔案：" + selected_file.name)
+            st.button("轉錄")
+            st.button("總結")
+
+    st.sidebar.write("作者：NZ")
+
+if __name__ == "__main__":
+    main()
