@@ -1,11 +1,3 @@
-# pip install openai
-# python3 -m pip install openai 
-# python -m pip install openai
-
-# pip install streamlit
-
-# python -m streamlit run Whisper.py
-
 import openai
 import streamlit as st
 
