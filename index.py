@@ -1,5 +1,8 @@
 import openai
 import streamlit as st
+import pyaudio
+import wave
+import datetime
 
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
