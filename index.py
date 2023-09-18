@@ -38,7 +38,7 @@ if media_file is not None:  # Check if a file has been uploaded
         st.write(transcribe_response)
         summary_response = openai.ChatCompletion.create(
             model = 'gpt-3.5-turbo',
-            messages = [{'role': 'user', 'content': '幫我把以下會議紀錄根據內容整理成段落後再段落整理成摘要並做出表格表格內容須顯示段落主題約30字內容再額外顯示最終結論 ' + transcribe_response}]
+            messages = [{'role': 'user', 'content': 'Write a 50 words summary of the main point discussed in these following recording: ' + transcribe_response}]
         )
         st.text("")
         st.text("Summary")
