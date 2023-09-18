@@ -3,3 +3,14 @@ https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app/co
 
 Open Streamlit share:
 https://share.streamlit.io/
+
+Note:
+Install openai & streamlit
+  # pip install openai
+  # python3 -m pip install openai 
+  # python -m pip install openai
+
+  # pip install streamlit
+
+Run Streamlit Locally
+  # python -m streamlit run Whisper.py
