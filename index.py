@@ -8,7 +8,7 @@ API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
 model_id = 'whisper-1' 
 
-st.title('Test App')
+st.title('Upload')
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
