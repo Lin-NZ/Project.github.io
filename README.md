@@ -1,1 +1,1 @@
-[Click Me](https://mortaxn.github.io/Project.github.io/index.py)
+[Click Me](https://transcriptionproject.streamlit.app/)
