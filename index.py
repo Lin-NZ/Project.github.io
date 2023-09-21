@@ -97,3 +97,4 @@ if selected == "Summary":
 
 # Q&A Page
 if selected == "Q&A":
+    st.title('Q&A')
