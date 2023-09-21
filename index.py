@@ -8,10 +8,11 @@ import datetime
 #Nav Bar Setting
 #with st.sidebar:
 selected = option_menu(
-    menu_title = None,
+    menu_title = "Menu",
+    menu_icon = "menu"
     options = ["Record", "Upload", "Transcribe", "Summary"],
     icons = ["record-circle", "upload", "book", "blockquote-left"],
-    orientation = "horizontal",
+    orientation = "",
     default_index = 1,
 )
 
