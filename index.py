@@ -19,8 +19,8 @@ with st.sidebar:
     selected = option_menu(
         menu_title = "Menu",
         menu_icon = "menu-button-fill",
-        options = ["Record", "Upload", "Transcribe", "Summary"],
-        icons = ["mic", "upload", "book", "blockquote-left"],
+        options = ["Record", "Upload", "Transcribe", "Summary", "Q&A"],
+        icons = ["mic", "upload", "book", "blockquote-left", ],
         #orientation = "horizontal",
         default_index = 1,
     )
@@ -94,3 +94,6 @@ if selected == "Summary":
         st.write("Please Upload Audio First!")
     else:
         st.write(st.session_state['summary_response'])
+
+# Q&A Page
+if selected == "Q&A":
