@@ -4,6 +4,9 @@ https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app/co
 Open Streamlit share:
 https://share.streamlit.io/
 
+Bootstrap Icons: 
+https://icons.getbootstrap.com/
+
 Note:
 Install openai & streamlit
   # pip install openai
