@@ -38,7 +38,6 @@ if selected == "Upload":
                 response_format = 'text'  # text, json, srt, vtt
             )
     
-    @st.cache_data
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
             transcribe_response = transcribe_audio()
