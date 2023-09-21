@@ -28,11 +28,10 @@ with st.sidebar:
 # Variables
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
-transcribe_response = None
-summary_response = None
-
 if 'transcribe_response' not in st.session_state:
     st.session_state['transcribe_response'] = None
+if 'summary_response' not in st.session_state:
+    st.session_state['summary_response'] = None
 
 # Function
 def transcribe_audio():
@@ -43,7 +42,6 @@ def transcribe_audio():
             file = media_file,
             response_format = 'text'  # text, json, srt, vtt
         )
-        st.session_state['transcribe_response'] = transcribe_response
         return transcribe_response
 
 def summarize_audio(tr_response):
@@ -75,25 +73,22 @@ if selected == "Upload":
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
             transcribe_response = transcribe_audio()
-            st.text("Transcription")
-            st.write(transcribe_response)
+            st.session_state['transcribe_response'] = transcribe_response
             summary_response = summarize_audio(transcribe_response)
-            st.text("")
-            st.text("Summary")
-            st.write(summary_response['choices'][0]['message']['content'])
+            st.session_state['summary_response'] = summary_response['choices'][0]['message']['content'])
 
 # Transcribe Page
 if selected == "Transcribe":
     st.title('Transcribe')
-    if transcribe_response == None:
-        st.write(st.session_state['transcribe_response'])
+    if st.session_state['transcribe_response'] == None:
+        st.write("Please Upload & Transcribe Audio First!")
     else:
         st.write(st.session_state['transcribe_response'])
 
 # Summary Page
 if selected == "Summary":
     st.title('Summary')
-    if summary_response == None:
+    if st.session_state['summary_response'] == None:
         st.write("Please Upload Audio First!")
     else:
         st.write(summary_response['choices'][0]['message']['content'])
