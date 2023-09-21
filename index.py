@@ -16,18 +16,20 @@ with st.sidebar:
         default_index = 1,
     )
 
+# Variables
+API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
+openai.api_key = API_Key # Accesing API Key (ChatGPT)
 transcribe_response = None
 summary_response = None
 
+# Record Page
 if selected == "Record":
     st.title('Record')
 
 # Upload Page
 if selected == "Upload":
     st.title('Upload')
-
-    API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
-    openai.api_key = API_Key # Accesing API Key (ChatGPT)
+    
     model_id = 'whisper-1' 
     
     media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
