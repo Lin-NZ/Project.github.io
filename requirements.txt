@@ -1,5 +1,6 @@
 openai
 streamlit
 streamlit-option-menu
-option-menu
+numpy
+pandas
 pyaudio
