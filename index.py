@@ -28,6 +28,8 @@ with st.sidebar:
 # Variables
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
+
+# Session State
 if 'transcribe_response' not in st.session_state:
     st.session_state['transcribe_response'] = None
 if 'summary_response' not in st.session_state:
@@ -75,7 +77,7 @@ if selected == "Upload":
             transcribe_response = transcribe_audio()
             st.session_state['transcribe_response'] = transcribe_response
             summary_response = summarize_audio(transcribe_response)
-            st.session_state['summary_response'] = summary_response['choices'][0]['message']['content'])
+            st.session_state['summary_response'] = summary_response['choices'][0]['message']['content']
 
 # Transcribe Page
 if selected == "Transcribe":
@@ -91,4 +93,4 @@ if selected == "Summary":
     if st.session_state['summary_response'] == None:
         st.write("Please Upload Audio First!")
     else:
-        st.write(summary_response['choices'][0]['message']['content'])
+        st.write(st.session_state['summary_response'])
