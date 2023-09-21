@@ -6,7 +6,7 @@ import wave
 import datetime
 
 #Nav Bar Setting
-with st.sidebar:
+#with st.sidebar: #Allow Sidebar
     selected = option_menu(
         menu_title = None,
         options = ["Record", "Upload", "Transcribe", "Summary"],
@@ -64,12 +64,10 @@ if selected == "Upload":
 if selected == "Transcribe":
     st.title('Transcribe')
 
-    st.text("Transcription")
     st.write(transcribe_response)
 
 #Summary Page
 if selected == "Summary":
     st.title('Summary')
 
-    st.text("Summary")
     st.write(summary_response['choices'][0]['message']['content'])
