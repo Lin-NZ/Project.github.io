@@ -60,9 +60,15 @@ if selected == "Upload":
 # Transcribe Page
 if selected == "Transcribe":
     st.title('Transcribe')
-    st.write(transcribe_response)
+    if transcribe_response == None:
+        st.write("Please Upload Audio First!")
+    else:
+        st.write(transcribe_response)
 
 # Summary Page
 if selected == "Summary":
     st.title('Summary')
-    st.write(summary_response['choices'][0]['message']['content'])
+    if summary_response == None:
+        st.write("Please Upload Audio First!")
+    else:
+        st.write(summary_response['choices'][0]['message']['content'])
