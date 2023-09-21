@@ -91,7 +91,7 @@ if selected == "Transcribe":
 if selected == "Summary":
     st.title('Summary')
     if st.session_state['summary_response'] == None:
-        st.write("Please Upload Audio First!")
+        st.write("Please Upload & Transcribe Audio First!")
     else:
         st.write(st.session_state['summary_response'])
 
