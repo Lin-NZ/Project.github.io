@@ -1,5 +1,6 @@
 import openai
 import streamlit as st
+import option_menu
 import pyaudio
 import wave
 import datetime
