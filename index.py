@@ -20,7 +20,6 @@ if selected == "Transcribe":
     st.title('Transcribe')
 
 #Upload Page
-@st.cache_data
 if selected == "Upload":
     st.title('Upload')
 
