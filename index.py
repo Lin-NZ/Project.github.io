@@ -15,8 +15,8 @@ with st.sidebar:
         default_index = 1,
     )
 
-transcribe_response
-summary_response
+transcribe_response = None
+summary_response = None
 
 #Transcribe Page
 if selected == "Transcribe":
