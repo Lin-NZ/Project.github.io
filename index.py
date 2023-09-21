@@ -5,6 +5,7 @@ import pyaudio
 import wave
 import datetime
 
+#Nav Bar Setting
 with st.sidebar:
     selected = option_menu(
         menu_title = None,
@@ -14,6 +15,11 @@ with st.sidebar:
         default_index = 1,
     )
 
+#Transcribe Page
+if selected == "Transcribe":
+    st.title('Transcribe')
+
+#Upload Page
 if selected == "Upload":
     st.title('Upload')
 
@@ -51,3 +57,17 @@ if selected == "Upload":
             st.text("")
             st.text("Summary")
             st.write(summary_response['choices'][0]['message']['content'])
+
+#Transcribe Page
+if selected == "Transcribe":
+    st.title('Transcribe')
+
+    st.text("Transcription")
+    st.write(transcribe_response)
+
+#Summary Page
+if selected == "Summary":
+    st.title('Summary')
+
+    st.text("Summary")
+    st.write(summary_response['choices'][0]['message']['content'])
