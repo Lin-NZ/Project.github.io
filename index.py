@@ -62,12 +62,8 @@ if selected == "Upload":
 
 #Transcribe Page
 if selected == "Transcribe":
-    st.title('Transcribe')
-
     st.write(transcribe_response)
 
 #Summary Page
 if selected == "Summary":
-    st.title('Summary')
-
     st.write(summary_response['choices'][0]['message']['content'])
