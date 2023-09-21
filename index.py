@@ -11,14 +11,7 @@ with st.sidebar:
         options = ["Record", "Upload", "Transcribe", "Summary"],
     )
 
-# Hide Footer(Made with Streamlit) & Main Menu
-hide_st_style = '''
-    <style>
-        #MainMenu {visibility : hidden;}
-        footer {visibility : hidden;}
-    </style>
-    '''
-st.markdown(hide_st_style, unsafe_allow_html = True)
+
 
 if selected == "Upload":
     st.title('Upload')
