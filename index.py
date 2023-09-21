@@ -20,7 +20,7 @@ with st.sidebar:
         menu_title = "Menu",
         menu_icon = "menu-button-fill",
         options = ["Record", "Upload", "Transcribe", "Summary", "Q&A"],
-        icons = ["mic", "upload", "book", "blockquote-left", ""],
+        icons = ["mic", "upload", "book", "blockquote-left", "chat-right-dots"],
         #orientation = "horizontal",
         default_index = 1,
     )
