@@ -7,9 +7,11 @@ import datetime
 
 with st.sidebar:
     selected = option_menu(
-        menu_title = "Main Menu",
+        menu_title = None,
         options = ["Record", "Upload", "Transcribe", "Summary"],
         icons = ["record-circle", "upload", "book", "blockquote-left"],
+        orientation = "horizontal",
+        default_index = 1,
     )
 
 if selected == "Upload":
