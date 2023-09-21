@@ -15,6 +15,9 @@ with st.sidebar:
         default_index = 1,
     )
 
+transcribe_response
+summary_response
+
 #Transcribe Page
 if selected == "Transcribe":
     st.title('Transcribe')
@@ -29,7 +32,6 @@ if selected == "Upload":
     
     media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
     
-    @st.cache_data
     def transcribe_audio():
         if media_file is not None:
             return openai.Audio.transcribe(
