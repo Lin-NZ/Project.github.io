@@ -32,7 +32,6 @@ transcribe_response = None
 summary_response = None
 
 # Function
-@st.cache_data
 def transcribe_audio():
     if media_file is not None:
         transcribe_response = openai.Audio.transcribe(
@@ -43,7 +42,6 @@ def transcribe_audio():
         )
         return transcribe_response
 
-@st.cache_data
 def summarize_audio(tr_response):
     if media_file is not None:
         summary_response = openai.ChatCompletion.create(
