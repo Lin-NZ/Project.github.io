@@ -5,6 +5,15 @@ import pyaudio
 import wave
 import datetime
 
+# Hide Footer(Made with Streamlit) & Main Menu
+hide_st_style = '''
+    <style>
+        #MainMenu {visibility : hidden;}
+        footer {visibility : hidden;}
+    </style>
+    '''
+st.markdown(hide_st_style, unsafe_allow_html = True)
+
 # Nav Bar Setting
 with st.sidebar:
     selected = option_menu(
