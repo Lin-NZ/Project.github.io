@@ -86,7 +86,7 @@ if selected == "Upload":
 if selected == "Transcribe":
     st.title('Transcribe')
     if transcribe_response == None:
-        st.write("Please Upload Audio First!")
+        st.write(st.session_state['transcribe_response'])
     else:
         st.write(st.session_state['transcribe_response'])
 
