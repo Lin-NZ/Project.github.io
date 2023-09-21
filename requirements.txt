@@ -1,6 +1,4 @@
 openai
 streamlit
-streamlit-option-menu
-numpy
-pandas
+streamlit_option_menu==0.3.2
 pyaudio
