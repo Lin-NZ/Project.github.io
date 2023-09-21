@@ -34,16 +34,17 @@ summary_response = None
 # Function
 def transcribe_audio():
     if media_file is not None:
-        return openai.Audio.transcribe(
+        transcribe_response = openai.Audio.transcribe(
             api_key = API_Key,
             model = model_id,
             file = media_file,
             response_format = 'text'  # text, json, srt, vtt
         )
+        return transcribe_response
 
 def summarize_audio(tr_response):
     if media_file is not None:
-        return openai.ChatCompletion.create(
+        summary_response = openai.ChatCompletion.create(
             model = 'gpt-3.5-turbo',
             messages = [
                 {"role": "system", "content": "你是個得力的文書處理助手。"},
@@ -53,6 +54,7 @@ def summarize_audio(tr_response):
                 {"role": "user", "content": tr_response}
             ]
         )
+        return summary_response
 
 # Record Page
 if selected == "Record":
