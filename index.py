@@ -1,6 +1,5 @@
 import openai
 import streamlit as st
-from streamlit_option_menu import option_menu
 import pyaudio
 import wave
 import datetime
@@ -10,8 +9,6 @@ with st.sidebar:
         menu_title = "Main Menu",
         options = ["Record", "Upload", "Transcribe", "Summary"],
     )
-
-
 
 if selected == "Upload":
     st.title('Upload')
