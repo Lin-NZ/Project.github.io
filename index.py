@@ -5,6 +5,7 @@ import pyaudio
 import wave
 import datetime
 
+
 # Nav Bar Setting
 with st.sidebar:
     selected = option_menu(
@@ -16,11 +17,13 @@ with st.sidebar:
         default_index = 1,
     )
 
+
 # Variables
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
 openai.api_key = API_Key # Accesing API Key (ChatGPT)
 transcribe_response = None
 summary_response = None
+
 
 # Record Page
 if selected == "Record":
