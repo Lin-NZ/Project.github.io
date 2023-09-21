@@ -31,6 +31,9 @@ openai.api_key = API_Key # Accesing API Key (ChatGPT)
 transcribe_response = None
 summary_response = None
 
+if 'transcribe_response' not in st.session_state:
+    st.session_state['transcribe_response'] = None
+
 # Function
 def transcribe_audio():
     if media_file is not None:
@@ -40,6 +43,7 @@ def transcribe_audio():
             file = media_file,
             response_format = 'text'  # text, json, srt, vtt
         )
+        st.session_state['transcribe_response'] = transcribe_response
         return transcribe_response
 
 def summarize_audio(tr_response):
@@ -84,7 +88,7 @@ if selected == "Transcribe":
     if transcribe_response == None:
         st.write("Please Upload Audio First!")
     else:
-        st.write(transcribe_response)
+        st.write(st.session_state['transcribe_response'])
 
 # Summary Page
 if selected == "Summary":
