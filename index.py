@@ -18,10 +18,6 @@ selected = option_menu(
 transcribe_response = None
 summary_response = None
 
-#Transcribe Page
-if selected == "Transcribe":
-    st.title('Transcribe')
-
 #Upload Page
 if selected == "Upload":
     st.title('Upload')
