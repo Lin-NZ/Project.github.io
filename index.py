@@ -29,7 +29,6 @@ if selected == "Upload":
     
     media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
 
-    @st.cache_data
     def transcribe_audio():
         if media_file is not None:
             return openai.Audio.transcribe(
@@ -39,13 +38,12 @@ if selected == "Upload":
                 response_format = 'text'  # text, json, srt, vtt
             )
     
-    
+    @st.cache_data
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
             transcribe_response = transcribe_audio()
             st.text("Transcription")
             st.write(transcribe_response)
-            @st.cache_data
             summary_response = openai.ChatCompletion.create(
                 model = 'gpt-3.5-turbo',
                 messages = [
