@@ -43,7 +43,7 @@ if media_file is not None:  # Check if a file has been uploaded
                 {"role": "assistant", "content": "我是一個基於人工智慧的語言模型，設計來幫助處理各種文書處理任務。如果您有任何需要，不論是文字處理、文件編輯、資訊檢索或其他任何事情，請隨時告訴我，我會盡力提供幫助。請問您有什麼特定的問題或工作，我可以協助您處理嗎？"},
                 {"role": "user", "content": input("幫我把會議紀錄根據內容整理成段落，再根據段落整理成表格，表格內容須顯示段落主題、約50字摘要，並在表個最後一列顯示最終結論。")},
                 {"role": "assistant", "content": "當然可以幫您進行這項任務。請提供會議紀錄的內容，我將根據您的要求整理成表格，包括段落主題、約50字的摘要，以及最終結論。請提供會議紀錄的文本或內容，我將嘗試協助您處理。"},
-                {"role": "user", "content": input(transcribe_response)},
+                {"role": "user", "content": input(transcribe_response)}
             ]
         )
         st.text("")
