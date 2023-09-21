@@ -28,7 +28,8 @@ if selected == "Upload":
     model_id = 'whisper-1' 
     
     media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
-
+    
+    @st.cache_data
     def transcribe_audio():
         if media_file is not None:
             return openai.Audio.transcribe(
