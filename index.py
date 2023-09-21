@@ -6,14 +6,14 @@ import wave
 import datetime
 
 #Nav Bar Setting
-#with st.sidebar: #Allow Sidebar
-    selected = option_menu(
-        menu_title = None,
-        options = ["Record", "Upload", "Transcribe", "Summary"],
-        icons = ["record-circle", "upload", "book", "blockquote-left"],
-        orientation = "horizontal",
-        default_index = 1,
-    )
+#with st.sidebar:
+selected = option_menu(
+    menu_title = None,
+    options = ["Record", "Upload", "Transcribe", "Summary"],
+    icons = ["record-circle", "upload", "book", "blockquote-left"],
+    orientation = "horizontal",
+    default_index = 1,
+)
 
 transcribe_response = None
 summary_response = None
