@@ -1,4 +1,4 @@
 openai
 streamlit
-streamlit-option-menu
+streamlit_option_menu
 pyaudio
