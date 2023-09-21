@@ -19,6 +19,9 @@ with st.sidebar:
 transcribe_response = None
 summary_response = None
 
+if selected == "Record":
+    st.title('Record')
+
 # Upload Page
 if selected == "Upload":
     st.title('Upload')
