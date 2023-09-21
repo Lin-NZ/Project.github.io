@@ -32,7 +32,7 @@ if selected == "Upload":
     
     
     if media_file is not None:  # Check if a file has been uploaded
-        if selected == "Transcribe":
+        if st.sidebar.button("Transcribe Audio"):
             transcribe_response = transcribe_audio()
             st.text("Transcription")
             st.write(transcribe_response)
