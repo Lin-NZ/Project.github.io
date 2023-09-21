@@ -51,13 +51,10 @@ if selected == "Upload":
                 file = media_file,
                 response_format = 'text'  # text, json, srt, vtt
             )
-    
-    if media_file is not None:  # Check if a file has been uploaded
-        if st.button("Transcribe Audio"):
-            transcribe_response = transcribe_audio()
-            st.text("Transcription")
-            st.write(transcribe_response)
-            summary_response = openai.ChatCompletion.create(
+
+    def summarize_audio(tr_response):
+        if media_file is not None:
+            return openai.ChatCompletion.create(
                 model = 'gpt-3.5-turbo',
                 messages = [
                     {"role": "system", "content": "你是個得力的文書處理助手。"},
@@ -67,6 +64,13 @@ if selected == "Upload":
                     {"role": "user", "content": transcribe_response}
                 ]
             )
+    
+    if media_file is not None:  # Check if a file has been uploaded
+        if st.button("Transcribe Audio"):
+            transcribe_response = transcribe_audio()
+            st.text("Transcription")
+            st.write(transcribe_response)
+            summary_response = summarize_audio(transcribe_response)
             st.text("")
             st.text("Summary")
             st.write(summary_response['choices'][0]['message']['content'])
