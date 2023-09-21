@@ -1,25 +1,25 @@
-icimport openai
+import openai
 from streamlit_option_menu import option_menu
 import streamlit as st
 import pyaudio
 import wave
 import datetime
 
-#Nav Bar Setting
+# Nav Bar Setting
 with st.sidebar:
     selected = option_menu(
         menu_title = "Menu",
         menu_icon = "menu"
         options = ["Record", "Upload", "Transcribe", "Summary"],
         icons = ["record-circle", "upload", "book", "blockquote-left"],
-        orientation = "vertical",
+        #orientation = "horizontal",
         default_index = 1,
     )
 
 transcribe_response = None
 summary_response = None
 
-#Upload Page
+# Upload Page
 if selected == "Upload":
     st.title('Upload')
 
@@ -57,12 +57,12 @@ if selected == "Upload":
             st.text("Summary")
             st.write(summary_response['choices'][0]['message']['content'])
 
-#Transcribe Page
+# Transcribe Page
 if selected == "Transcribe":
     st.title('Transcribe')
     st.write(transcribe_response)
 
-#Summary Page
+# Summary Page
 if selected == "Summary":
     st.title('Summary')
     st.write(summary_response['choices'][0]['message']['content'])
