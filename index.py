@@ -5,6 +5,12 @@ import pyaudio
 import wave
 import datetime
 
+with st.sidebar:
+    selected = option_menu(
+        menu_title = "Main Menu",
+        options = ["Record", "Upload", "Transcribe", "Summary"],
+    )
+
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
     <style>
