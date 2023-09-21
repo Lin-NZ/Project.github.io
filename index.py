@@ -9,6 +9,7 @@ with st.sidebar:
     selected = option_menu(
         menu_title = "Main Menu",
         options = ["Record", "Upload", "Transcribe", "Summary"],
+        icons = ["record-circle", "upload", "book", "blockquote-left"],
     )
 
 if selected == "Upload":
