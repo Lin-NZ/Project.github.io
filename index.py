@@ -18,9 +18,9 @@ st.markdown(hide_st_style, unsafe_allow_html = True)
 with st.sidebar:
     selected = option_menu(
         menu_title = "Menu",
-        menu_icon = "menu",
+        menu_icon = "menu-button-fill",
         options = ["Record", "Upload", "Transcribe", "Summary"],
-        icons = ["record-circle", "upload", "book", "blockquote-left"],
+        icons = ["mic", "upload", "book", "blockquote-left"],
         #orientation = "horizontal",
         default_index = 1,
     )
