@@ -1,4 +1,4 @@
-import openai
+icimport openai
 from streamlit_option_menu import option_menu
 import streamlit as st
 import pyaudio
@@ -12,7 +12,7 @@ with st.sidebar:
         menu_icon = "menu"
         options = ["Record", "Upload", "Transcribe", "Summary"],
         icons = ["record-circle", "upload", "book", "blockquote-left"],
-        orientation = "",
+        orientation = "vertical",
         default_index = 1,
     )
 
