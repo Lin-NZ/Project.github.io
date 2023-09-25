@@ -61,6 +61,8 @@ def summarize_audio(tr_response):
 
 # Record Page
 if selected == "Record":
+    st.title('Record')
+    
     wav_audio_data = st_audiorec()
 
     if wav_audio_data is not None:
