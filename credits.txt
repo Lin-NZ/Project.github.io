@@ -1,1 +1,2 @@
-
+https://github.com/stefanrmmr/streamlit-audio-recorder
+https://github.com/victoryhb/streamlit-option-menu
