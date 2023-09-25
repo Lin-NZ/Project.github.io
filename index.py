@@ -64,16 +64,16 @@ if selected == "Record":
     audio = audiorecorder("Click to record", "Click to stop recording")
 
     if not audio.empty():
-    # To play audio in frontend:
-    st.audio(audio.export().read())  
-
-    # To save audio to a file, use pydub export method:
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"recorded_audio_{timestamp}.wav"
-    audio.export(filename, format="wav")
-
-    # To get audio properties, use pydub AudioSegment properties:
-    st.write(f"Frame rate: {audio.frame_rate}, Frame width: {audio.frame_width}, Duration: {audio.duration_seconds} seconds")
+        # To play audio in frontend:
+        st.audio(audio.export().read())  
+    
+        # To save audio to a file, use pydub export method:
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"recorded_audio_{timestamp}.wav"
+        audio.export(filename, format="wav")
+    
+        # To get audio properties, use pydub AudioSegment properties:
+        st.write(f"Frame rate: {audio.frame_rate}, Frame width: {audio.frame_width}, Duration: {audio.duration_seconds} seconds")
 
 # Upload Page
 if selected == "Upload":
