@@ -2,4 +2,4 @@ openai
 streamlit_option_menu
 streamlit
 datetime
-streamlit-audiorecorder
+streamlit-audiorec
