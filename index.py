@@ -115,8 +115,10 @@ if selected == "Upload":
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
             transcribe_response = transcribe_audio()
+            st.write("Transcription Completed!")
             st.session_state['transcribe_response'] = transcribe_response
             summary_response = summarize_audio(transcribe_response)
+            st.write("Summarizing Completed!")
             st.session_state['summary_response'] = summary_response['choices'][0]['message']['content']
 
 # Transcribe Page
