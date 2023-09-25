@@ -1,6 +1,5 @@
 openai
 streamlit_option_menu
 streamlit
-pyaudio
-wave
 datetime
+streamlit-audiorecorder
