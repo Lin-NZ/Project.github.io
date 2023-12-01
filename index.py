@@ -119,7 +119,7 @@ if selected == "Q&A":
             message_placeholder = st.empty()
             full_response = ""
 
-            uploaded_content = st.session_state['transcribe_response']
+            uploaded_content = st.session_state['transcribe_response'].strip()
             
             # Include the uploaded essay text as context for the conversation
             conversation = [{"role": "system", "content": "You are a helpful assistant."},
