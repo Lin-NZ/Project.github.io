@@ -103,59 +103,32 @@ if selected == "Summary":
 
 # Q&A Page
 if selected == "Q&A":
-    First_Rep = 0
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    preset_messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "assistant", "content": "Please upload your transcription"},
+        {"role": "user", "content": st.session_state['transcribe_response']},
+        {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}
+    ]
     
-    # Display previous messages
+    if "messages" not in st.session_state:
+        st.session_state.messages = preset_messages
+
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
-    if prompt := st.chat_input("Any Question?"):
-        if First_Rep == 0
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            with st.chat_message("user"):
-                st.markdown(prompt)
-            with st.chat_message("assistant"):
-                message_placeholder = st.empty()
-                full_response = ""
-    
-                uploaded_content = st.session_state['transcribe_response'].strip()
-    
-                # Include the uploaded essay text as context for the conversation
-                conversation = [{"role": "system", "content": "You are a helpful assistant."},
-                                {"role": "assistant", "content": "Please upload your transcription"},
-                                {"role": "user", "content": uploaded_content},
-                                {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}]
-                # Add the user's question to the conversation
-                conversation.append({"role": "user", "content": prompt})
-                
-                # st.write("Conversation input:", conversation)
-                
-                for response in openai.ChatCompletion.create(
-                    model = "gpt-3.5-turbo",
-                    messages = conversation,
-                    stream=True
-                ):
-                    full_response += response.choices[0].delta.get("content", "")
-                    message_placeholder.markdown(full_response + "▌")
-        
-                message_placeholder.markdown(full_response)
-        
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
-        else:
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            with st.chat_message("user"):
-                st.markdown(prompt)
-            with st.chat_message("assistant"):
-                message_placeholder = st.empty()
-                full_response = ""
-                for response in openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=[{"role": m["role"], "content": m["content"]}
-                              for m in st.session_state.messages], stream=True):
-                    full_response += response.choices[0].delta.get("content", "")
-                    message_placeholder.markdown(full_response + "▌")
-                message_placeholder.markdown(full_response)
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
+    if prompt := st.chat_input("What is up?"):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": m["role"], "content": m["content"]}
+                          for m in st.session_state.messages], stream=True):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
