@@ -106,6 +106,7 @@ if selected == "Q&A":
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
+    # Display previous messages
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
@@ -127,14 +128,22 @@ if selected == "Q&A":
                             {"role": "user", "content": context},
                             {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}]
     
+            # Check if the user is asking to rewrite lyrics
+            if "rewrite the lyrics" in prompt.lower():
+                # Provide a more structured prompt for rewriting lyrics
+                prompt_rewrite_lyrics = "Rewrite the lyrics in 30 words or less:"
+                conversation.append({"role": "user", "content": prompt_rewrite_lyrics})
+                # Add the user's original request for context
+                conversation.append({"role": "user", "content": prompt})
+                
             for response in openai.ChatCompletion.create(
-                model = "gpt-3.5-turbo",
-                messages = conversation,
-                stream = True
+                model="gpt-3.5-turbo",
+                messages=conversation,
+                stream=True
             ):
                 full_response += response.choices[0].delta.get("content", "")
                 message_placeholder.markdown(full_response + "▌")
     
             message_placeholder.markdown(full_response)
-        
+    
         st.session_state.messages.append({"role": "assistant", "content": full_response})
