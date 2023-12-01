@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 from st_audiorec import st_audiorec
 import datetime
+import io
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
