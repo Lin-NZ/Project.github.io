@@ -103,4 +103,37 @@ if selected == "Summary":
 
 # Q&A Page
 if selected == "Q&A":
-    st.title('Q&A')
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+    
+    # Use the uploaded essay text as the initial context for the conversation
+    context = st.session_state.get('transcribe_response', '')
+    
+    if prompt := st.chat_input("What do you want to ask about the essay?"):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+    
+            # Include the uploaded essay text as context for the conversation
+            conversation = [{"role": "system", "content": "You are a helpful assistant."},
+                           {"role": "user", "content": context},
+                           {"role": "assistant", "content": " "}]
+    
+            for response in openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=conversation,
+                stream=True
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+    
+            message_placeholder.markdown(full_response)
+        
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
