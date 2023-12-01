@@ -118,15 +118,19 @@ if selected == "Q&A":
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-    
+
+            uploaded_content = st.session_state['transcribe_response']
+            
             # Include the uploaded essay text as context for the conversation
             conversation = [{"role": "system", "content": "You are a helpful assistant."},
                             {"role": "assistant", "content": "Please upload your transcription"},
-                            {"role": "user", "content": st.session_state['transcribe_response']},
+                            {"role": "user", "content": uploaded_content},
                             {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}]
 
             # Add the user's question to the conversation
             conversation.append({"role": "user", "content": prompt})
+
+            st.write("Conversation input:", conversation)
 
             for response in openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
