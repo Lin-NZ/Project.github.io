@@ -47,18 +47,6 @@ def transcribe_audio():
         return transcribe_response
 
 def transcribe_audio_chunked(audio_data, chunk_size = 5 * 60, model_id = 'whisper-large', response_format = 'text'):
-    """
-    Transcribe audio using the OpenAI API with chunking.
-
-    Parameters:
-    - audio_data (bytes): The binary data of the entire audio file.
-    - chunk_size (int): The size of each audio chunk in seconds.
-    - model_id (str): The ID of the Whisper ASR model to use (default is 'whisper-large').
-    - response_format (str): The desired format of the transcription response ('text', 'json', 'srt', 'vtt').
-
-    Returns:
-    - str: Transcribed text or the response based on the specified format.
-    """
     # Calculate the number of chunks based on the chunk size
     total_duration = len(audio_data) / (2 * 16000)  # Assuming 16-bit PCM audio at 16 kHz
     num_chunks = int(total_duration / chunk_size)
@@ -85,7 +73,7 @@ def transcribe_audio_chunked(audio_data, chunk_size = 5 * 60, model_id = 'whispe
 
     # Combine the transcriptions of individual chunks into a single string
     final_transcription = ' '.join(chunk_transcriptions)
-
+    st.write(final_transcription)
     return final_transcription
 
 def summarize_audio(tr_response):
@@ -125,8 +113,7 @@ if selected == "Upload":
                 audio_data = media_file.read(),
                 chunk_size = 5 * 60,  # 5 minutes per chunk
                 model_id = 'whisper-large',
-                response_format = 'text'
-            )
+                response_format = 'text')
             st.write("Transcription Completed!")
             st.session_state['transcribe_response'] = transcribe_response
             summary_response = summarize_audio(transcribe_response)
