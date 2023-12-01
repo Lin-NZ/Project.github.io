@@ -3,7 +3,6 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 from st_audiorec import st_audiorec
 import datetime
-import io
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
@@ -46,36 +45,6 @@ def transcribe_audio():
         )
         return transcribe_response
 
-def transcribe_audio_chunked(audio_data, chunk_size = 5 * 60, model_id = 'whisper-large', response_format = 'text'):
-    # Calculate the number of chunks based on the chunk size
-    total_duration = len(audio_data) / (2 * 16000)  # Assuming 16-bit PCM audio at 16 kHz
-    num_chunks = int(total_duration / chunk_size)
-
-    # Initialize an empty list to store individual chunk transcriptions
-    chunk_transcriptions = []
-
-    # Split the audio data into chunks and transcribe each chunk
-    for i in range(num_chunks):
-        start_time = i * chunk_size
-        end_time = (i + 1) * chunk_size
-        chunk_data = audio_data[start_time * 2 * 16000:end_time * 2 * 16000]  # Adjust the indexing based on your audio format
-
-        # Use io.BytesIO to create a file-like object for the chunk
-        chunk_io = io.BytesIO(chunk_data)
-
-        # Transcribe the current chunk and append the result to the list
-        transcribe_response = openai.Audio.transcribe(
-            model=model_id,
-            file=chunk_io,
-            response_format=response_format
-        )
-        chunk_transcriptions.append(transcribe_response)
-
-    # Combine the transcriptions of individual chunks into a single string
-    final_transcription = ' '.join(chunk_transcriptions)
-    st.write(final_transcription)
-    return final_transcription
-
 def summarize_audio(tr_response):
     if media_file is not None:
         summary_response = openai.ChatCompletion.create(
@@ -109,11 +78,7 @@ if selected == "Upload":
     
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
-            transcribe_response = transcribe_audio_chunked(
-                audio_data = media_file.read(),
-                chunk_size = 5 * 60,  # 5 minutes per chunk
-                model_id = 'whisper-large',
-                response_format = 'text')
+            transcribe_response = transcribe_audio()
             st.write("Transcription Completed!")
             st.session_state['transcribe_response'] = transcribe_response
             summary_response = summarize_audio(transcribe_response)
