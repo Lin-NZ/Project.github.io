@@ -112,7 +112,7 @@ if selected == "Q&A":
             st.markdown(message["content"])
     
     # Initial Context
-    context = st.session_state.get('transcribe_response', '')
+    context = st.session_state['transcribe_response']
     
     if prompt := st.chat_input("Any Question?"):
         st.session_state.messages.append({"role": "user", "content": prompt})
