@@ -1,3 +1,4 @@
 https://github.com/stefanrmmr/streamlit-audio-recorder
 https://github.com/victoryhb/streamlit-option-menu
+https://github.com/dataprofessor/openai-chatbot
 https://streamlit.io/
