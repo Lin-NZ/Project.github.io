@@ -26,7 +26,7 @@ with st.sidebar:
 
 # Variables
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
-openai.api_key = API_Key # Accesing API Key (ChatGPT)
+openai.api_key = API_Key # Accessing API Key Globally(ChatGPT)
 
 # Session State
 if 'transcribe_response' not in st.session_state:
