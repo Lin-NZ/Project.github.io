@@ -110,10 +110,10 @@ if selected == "Q&A":
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
-    # Use the uploaded essay text as the initial context for the conversation
+    # Initial Context
     context = st.session_state.get('transcribe_response', '')
     
-    if prompt := st.chat_input("What do you want to ask about the essay?"):
+    if prompt := st.chat_input("Any Question?"):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -123,13 +123,14 @@ if selected == "Q&A":
     
             # Include the uploaded essay text as context for the conversation
             conversation = [{"role": "system", "content": "You are a helpful assistant."},
-                           {"role": "user", "content": context},
-                           {"role": "assistant", "content": " "}]
+                            {"role": "assistant", "content": "Please upload your transcription"},
+                            {"role": "user", "content": context},
+                            {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}]
     
             for response in openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=conversation,
-                stream=True
+                model = "gpt-3.5-turbo",
+                messages = conversation,
+                stream = True
             ):
                 full_response += response.choices[0].delta.get("content", "")
                 message_placeholder.markdown(full_response + "▌")
