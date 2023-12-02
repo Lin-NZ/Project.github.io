@@ -41,7 +41,7 @@ def transcribe_audio():
             api_key = API_Key,
             model = model_id,
             file = media_file,
-            response_format = 'srt'  # text, json, srt, vtt
+            response_format = 'text'  # text, json, srt, vtt
         )
         return transcribe_response
 
