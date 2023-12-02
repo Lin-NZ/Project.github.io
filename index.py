@@ -114,7 +114,7 @@ if selected == "Q&A":
         ]
         
         if "messages" not in st.session_state:
-            st.session_state.messages = preset_messages[3:]
+            st.session_state.messages = preset_messages
     
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
