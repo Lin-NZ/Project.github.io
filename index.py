@@ -110,7 +110,7 @@ if selected == "Q&A":
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "assistant", "content": "Please upload your transcription"},
             {"role": "user", "content": st.session_state['transcribe_response']},
-            {"role": "assistant", "content": "So from the transcription you have uploaded, what question do you have?"}
+            {"role": "assistant", "content": "那麼根據您的紀錄，您有什麼想提問的嗎？?"}
         ]
         
         if "messages" not in st.session_state:
