@@ -41,7 +41,7 @@ def transcribe_audio():
             api_key = API_Key,
             model = model_id,
             file = media_file,
-            response_format = 'text'  # text, json, srt, vtt
+            response_format = 'srt'  # text, json, srt, vtt
         )
         return transcribe_response
 
@@ -50,11 +50,11 @@ def summarize_audio(tr_response):
         summary_response = openai.ChatCompletion.create(
             model = 'gpt-3.5-turbo-1106',
             messages = [
-                {"role": "system", "content": "你是個熟練於整理重點跟紀錄重要事項的文書處理者。"},
-                {"role": "assistant", "content": "是的，我擁有整理、記錄和處理文書的能力。如果您有任何需要整理的信息或想要記錄的重要事項，請告訴我，我將盡力協助您完成相關的文書工作。無論是整理文件、撰寫摘要、還是紀錄重要內容，我都可以提供支援。請告訴我您需要的具體協助，我將竭誠為您服務。請問您有什麼特定的問題或工作，我可以協助您處理嗎？"},
+                {"role": "system", "content": "你是個熟練於把口頭會議整理出重點跟紀錄重要事項的會議紀錄員。"},
+                {"role": "assistant", "content": "是的，我可以協助整理口頭會議的重點並紀錄重要事項。請告訴我您希望突顯的重點，以及是否有特定的格式或要求。我會努力確保記錄準確、清晰且具有易讀性。如果有任何特殊需求或指示，也請隨時告訴我，我會按照您的要求處理會議紀錄。"},
                 {"role": "user", "content": "幫我把會議紀錄根據內容梳理成段落，再根據段落整理出第一個表格為會議摘要，內容須顯示段落主題、約50字摘要，並在表格最後一個行最終結論；第二個表格為待辦清單，根据會議記錄，顯示待辦事項(若沒有則填寫無)、執行者(若沒有則填寫無)"},
                 {"role": "assistant", "content": "當然可以幫您進行這項任務。請提供會議紀錄的內容，我將根據您的要求整理成表格。請提供會議紀錄的文本或內容，我將嘗試協助您處理。"},
-                {"role": "user", "content": "把以下會議記錄按照上面的要求彙整，結尾不需要其他詢問:"+ tr_response}
+                {"role": "user", "content": "把以下會議記錄按照上面的要求彙整並輸出:"+ tr_response}
             ]
         )
         return summary_response
