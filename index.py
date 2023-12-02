@@ -48,7 +48,7 @@ def transcribe_audio():
 def summarize_audio(tr_response):
     if media_file is not None:
         summary_response = openai.ChatCompletion.create(
-            model = 'gpt-3.5-turbo',
+            model = 'gpt-3.5-turbo-1106',
             messages = [
                 {"role": "system", "content": "你是個得力的文書處理助手。"},
                 {"role": "assistant", "content": "我是一個基於人工智慧的語言模型，設計來幫助處理各種文書處理任務。如果您有任何需要，不論是文字處理、文件編輯、資訊檢索或其他任何事情，請隨時告訴我，我會盡力提供幫助。請問您有什麼特定的問題或工作，我可以協助您處理嗎？"},
@@ -131,7 +131,7 @@ if selected == "Q&A":
                 full_response = ""
                 
                 for response in openai.ChatCompletion.create(
-                    model = "gpt-3.5-turbo",
+                    model = "gpt-3.5-turbo-1106",
                     messages = [{"role": m["role"], "content": m["content"]}
                               for m in st.session_state.messages], stream=True):
                                   
