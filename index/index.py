@@ -3,6 +3,11 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 import datetime
 import json
+from streamlit_webrtc import webrtc_streamer, WebRtcMode
+import av
+import numpy as np
+import soundfile as sf
+import io
 
 
 with open('index/prompt.json', 'r', encoding='utf-8') as f:
@@ -61,10 +66,41 @@ def summarize_audio(tr_response):
 if selected == "Record":
     st.title('Record')
     
-    audio_file = st.audio_recorder()
+    def audio_frame_callback(frame):
+        sound = frame.to_ndarray()
+        return av.AudioFrame.from_ndarray(sound, layout="stereo")
     
-    if audio_file is not None:
-        st.audio(audio_file, format='audio/wav')
+    webrtc_ctx = webrtc_streamer(
+        key="speech-to-text",
+        mode=WebRtcMode.SENDONLY,
+        audio_receiver_size=1024,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={"video": False, "audio": True},
+    )
+    
+    if webrtc_ctx.state.playing:
+        audio_frames = []
+        while True:
+            if webrtc_ctx.audio_receiver:
+                try:
+                    audio_frames.append(webrtc_ctx.audio_receiver.get_frame())
+                except Exception as e:
+                    break
+        
+        if audio_frames:
+            # 將音頻幀轉換為 numpy 數組
+            audio_data = np.concatenate([frame.to_ndarray() for frame in audio_frames])
+            
+            # 將音頻數據保存為 WAV 文件
+            audio_bytes = io.BytesIO()
+            sf.write(audio_bytes, audio_data, 44100, format='WAV')
+            audio_bytes.seek(0)
+            
+            # 顯示音頻播放器
+            st.audio(audio_bytes, format='audio/wav')
+            
+            # 將音頻數據保存到 session state
+            st.session_state['recorded_audio'] = audio_bytes.getvalue()
 
 # Upload Page
 if selected == "Upload":
