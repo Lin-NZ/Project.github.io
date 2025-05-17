@@ -7,7 +7,10 @@ import json
 
 # 讀取 prompt.txt 檔案
 with open('prompt.txt', 'r', encoding='utf-8') as f:
-    prompt = eval(f.read())
+    content = f.read()
+    # 移除 "prompt = " 並解析 JSON
+    json_content = content.replace('prompt = ', '')
+    prompt = json.loads(json_content)
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
