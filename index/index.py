@@ -68,7 +68,7 @@ if selected == "Record":
     st.title('錄音功能')
     
     # 使用 streamlit 內建的錄音功能
-    audio_bytes = st.audio_recorder(
+    audio_bytes = st.audiorecorder(
         text="點擊開始錄音",
         recording_color="#e74c3c",
         neutral_color="#3498db",
