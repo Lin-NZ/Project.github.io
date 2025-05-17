@@ -7,6 +7,7 @@ import pyaudio
 import wave
 import tempfile
 import os
+import time
 
 
 with open('index/prompt.json', 'r', encoding='utf-8') as f:
@@ -63,67 +64,105 @@ def summarize_audio(tr_response):
 
 # Record Page
 if selected == "Record":
-    st.title('Record')
+    st.title('錄音功能')
     
+    # 音頻參數設定
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 44100
     
+    # 初始化 session state
     if 'recording' not in st.session_state:
         st.session_state.recording = False
     if 'audio_data' not in st.session_state:
         st.session_state.audio_data = []
+    if 'recording_time' not in st.session_state:
+        st.session_state.recording_time = 0
+    if 'recorded_audio' not in st.session_state:
+        st.session_state.recorded_audio = None
     
     def record_audio():
-        p = pyaudio.PyAudio()
-        stream = p.open(format=FORMAT,
-                       channels=CHANNELS,
-                       rate=RATE,
-                       input=True,
-                       frames_per_buffer=CHUNK)
-        
-        st.session_state.recording = True
-        st.session_state.audio_data = []
-        
-        while st.session_state.recording:
-            data = stream.read(CHUNK)
-            st.session_state.audio_data.append(data)
-        
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
+        try:
+            p = pyaudio.PyAudio()
+            stream = p.open(format=FORMAT,
+                          channels=CHANNELS,
+                          rate=RATE,
+                          input=True,
+                          frames_per_buffer=CHUNK)
+            
+            st.session_state.recording = True
+            st.session_state.audio_data = []
+            start_time = time.time()
+            
+            while st.session_state.recording:
+                data = stream.read(CHUNK, exception_on_overflow=False)
+                st.session_state.audio_data.append(data)
+                st.session_state.recording_time = int(time.time() - start_time)
+            
+            stream.stop_stream()
+            stream.close()
+            p.terminate()
+            
+        except Exception as e:
+            st.error(f"錄音時發生錯誤: {str(e)}")
+            st.session_state.recording = False
     
-    col1, col2 = st.columns(2)
+    # 錄音控制按鈕
+    col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button('開始錄音'):
+        if st.button('開始錄音', disabled=st.session_state.recording):
             st.session_state.recording = True
             record_audio()
     
     with col2:
-        if st.button('停止錄音'):
+        if st.button('停止錄音', disabled=not st.session_state.recording):
             st.session_state.recording = False
     
+    with col3:
+        if st.button('清除錄音', disabled=not st.session_state.audio_data):
+            st.session_state.audio_data = []
+            st.session_state.recorded_audio = None
+            st.session_state.recording_time = 0
+            st.experimental_rerun()
+    
+    # 顯示錄音時間
+    if st.session_state.recording:
+        st.write(f"錄音時間: {st.session_state.recording_time} 秒")
+    
+    # 處理錄音數據
     if st.session_state.audio_data:
-        # 創建臨時文件來保存音頻
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
-            wf = wave.open(temp_file.name, 'wb')
-            wf.setnchannels(CHANNELS)
-            wf.setsampwidth(pyaudio.PyAudio().get_sample_size(FORMAT))
-            wf.setframerate(RATE)
-            wf.writeframes(b''.join(st.session_state.audio_data))
-            wf.close()
-            
-            # 顯示音頻播放器
-            st.audio(temp_file.name, format='audio/wav')
-            
-            # 將音頻數據保存到 session state
-            with open(temp_file.name, 'rb') as f:
-                st.session_state['recorded_audio'] = f.read()
-            
-            # 刪除臨時文件
-            os.unlink(temp_file.name)
+        try:
+            # 創建臨時文件來保存音頻
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
+                wf = wave.open(temp_file.name, 'wb')
+                wf.setnchannels(CHANNELS)
+                wf.setsampwidth(pyaudio.PyAudio().get_sample_size(FORMAT))
+                wf.setframerate(RATE)
+                wf.writeframes(b''.join(st.session_state.audio_data))
+                wf.close()
+                
+                # 顯示音頻播放器
+                st.audio(temp_file.name, format='audio/wav')
+                
+                # 將音頻數據保存到 session state
+                with open(temp_file.name, 'rb') as f:
+                    st.session_state['recorded_audio'] = f.read()
+                
+                # 刪除臨時文件
+                os.unlink(temp_file.name)
+                
+                # 顯示下載按鈕
+                st.download_button(
+                    label="下載錄音檔案",
+                    data=st.session_state['recorded_audio'],
+                    file_name=f"recording_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.wav",
+                    mime="audio/wav"
+                )
+                
+        except Exception as e:
+            st.error(f"處理音頻時發生錯誤: {str(e)}")
 
 # Upload Page
 if selected == "Upload":

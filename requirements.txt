@@ -3,3 +3,6 @@ streamlit-option-menu
 streamlit
 datetime
 streamlit-audiorecorder
+pyaudio>=0.2.13
+wave
+tempfile
