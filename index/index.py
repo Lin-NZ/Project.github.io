@@ -7,6 +7,8 @@ from audiorecorder import audiorecorder
 import tempfile
 import os
 import time
+import base64
+from io import BytesIO
 
 
 with open('index/prompt.json', 'r', encoding='utf-8') as f:
@@ -65,23 +67,24 @@ def summarize_audio(tr_response):
 if selected == "Record":
     st.title('錄音功能')
     
-    # 使用 audiorecorder 元件
-    audio_data = audiorecorder("開始錄音", "停止錄音")
+    # 使用 streamlit 內建的錄音功能
+    audio_bytes = st.audio_recorder(
+        text="點擊開始錄音",
+        recording_color="#e74c3c",
+        neutral_color="#3498db",
+    )
     
-    if len(audio_data) > 0:
-        # 顯示錄音時間
-        st.write(f"錄音長度: {len(audio_data)/1000:.1f} 秒")
-        
-        # 播放錄音
-        st.audio(audio_data.export().read())
+    if audio_bytes:
+        # 顯示錄音播放器
+        st.audio(audio_bytes, format="audio/wav")
         
         # 儲存錄音到 session state
-        st.session_state['recorded_audio'] = audio_data.export().read()
+        st.session_state['recorded_audio'] = audio_bytes
         
         # 提供下載按鈕
         st.download_button(
             label="下載錄音檔案",
-            data=st.session_state['recorded_audio'],
+            data=audio_bytes,
             file_name=f"recording_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.wav",
             mime="audio/wav"
         )
