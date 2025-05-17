@@ -1,8 +1,13 @@
-import openai
+from openai import OpenAI
 from streamlit_option_menu import option_menu
 import streamlit as st
 from st_audiorec import st_audiorec
 import datetime
+import json
+
+# 讀取 prompt.txt 檔案
+with open('prompt.txt', 'r', encoding='utf-8') as f:
+    prompt = eval(f.read())
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
