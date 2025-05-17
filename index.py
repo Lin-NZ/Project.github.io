@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 import datetime
 import json
-from streamlit_audiorecorder import audiorecorder
+from st_audiorec import st_audiorec
 import tempfile
 import os
 import time
@@ -63,39 +63,12 @@ def summarize_audio(tr_response):
 
 # Record Page
 if selected == "Record":
-    st.title('錄音功能')
+    st.title('Record')
     
-    st.set_page_config(page_title="語音錄音器", layout="centered")
+    wav_audio_data = st_audiorec()
 
-st.title("🎤 即時錄音系統")
-st.markdown("使用下方錄音按鈕開始錄音，完成後可下載音訊檔。")
-
-# 使用 audiorecorder 元件
-audio = audiorecorder("▶️ 開始錄音", "⏹️ 停止錄音")
-
-# 顯示錄音時間（簡易實作）
-start_time = st.session_state.get("start_time", None)
-
-if audio is not None and len(audio) > 0:
-    if not start_time:
-        st.session_state.start_time = time.time()
-
-    end_time = time.time()
-    duration = end_time - st.session_state.start_time
-    st.success(f"🕒 錄音時間：{duration:.2f} 秒")
-
-    # 顯示音訊播放器
-    st.audio(audio, format="audio/wav")
-
-    # 下載連結
-    b64 = base64.b64encode(audio).decode()
-    href = f'<a href="data:audio/wav;base64,{b64}" download="recording.wav">📥 點此下載錄音檔</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
-    # 重置 start_time
-    st.session_state.start_time = None
-else:
-    st.info("請點選『開始錄音』來錄製語音。")
+    if wav_audio_data is not None:
+        st.audio(wav_audio_data, format='audio/wav')
 
 # Upload Page
 if selected == "Upload":
