@@ -1,16 +1,9 @@
 from openai import OpenAI
 from streamlit_option_menu import option_menu
 import streamlit as st
-from st_audiorec import st_audiorec
 import datetime
 import json
 
-# 讀取 prompt.txt 檔案
-with open('prompt.txt', 'r', encoding='utf-8') as f:
-    content = f.read()
-    # 移除 "prompt = " 並解析 JSON
-    json_content = content.replace('prompt = ', '')
-    prompt = json.loads(json_content)
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
@@ -65,10 +58,10 @@ def summarize_audio(tr_response):
 if selected == "Record":
     st.title('Record')
     
-    wav_audio_data = st_audiorec()
-
-    if wav_audio_data is not None:
-        st.audio(wav_audio_data, format='audio/wav')
+    audio_file = st.audio_recorder()
+    
+    if audio_file is not None:
+        st.audio(audio_file, format='audio/wav')
 
 # Upload Page
 if selected == "Upload":
