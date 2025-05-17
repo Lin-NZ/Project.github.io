@@ -9,7 +9,7 @@ import os
 import time
 
 
-with open('index/prompt.json', 'r', encoding='utf-8') as f:
+with open('main/prompt.json', 'r', encoding='utf-8') as f:
     prompt = json.load(f)
 
 # Hide Footer(Made with Streamlit) & Main Menu
