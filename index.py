@@ -4,6 +4,8 @@ import streamlit as st
 import datetime
 import json
 
+with open('prompt.json', 'r', encoding='utf-8') as f:
+    prompt = json.load(f)
 
 # Hide Footer(Made with Streamlit) & Main Menu
 hide_st_style = '''
