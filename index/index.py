@@ -3,11 +3,10 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 import datetime
 import json
-from streamlit_webrtc import webrtc_streamer, WebRtcMode
-import av
-import numpy as np
-import soundfile as sf
-import io
+import pyaudio
+import wave
+import tempfile
+import os
 
 
 with open('index/prompt.json', 'r', encoding='utf-8') as f:
@@ -66,41 +65,65 @@ def summarize_audio(tr_response):
 if selected == "Record":
     st.title('Record')
     
-    def audio_frame_callback(frame):
-        sound = frame.to_ndarray()
-        return av.AudioFrame.from_ndarray(sound, layout="stereo")
+    CHUNK = 1024
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 44100
     
-    webrtc_ctx = webrtc_streamer(
-        key="speech-to-text",
-        mode=WebRtcMode.SENDONLY,
-        audio_receiver_size=1024,
-        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-        media_stream_constraints={"video": False, "audio": True},
-    )
+    if 'recording' not in st.session_state:
+        st.session_state.recording = False
+    if 'audio_data' not in st.session_state:
+        st.session_state.audio_data = []
     
-    if webrtc_ctx.state.playing:
-        audio_frames = []
-        while True:
-            if webrtc_ctx.audio_receiver:
-                try:
-                    audio_frames.append(webrtc_ctx.audio_receiver.get_frame())
-                except Exception as e:
-                    break
+    def record_audio():
+        p = pyaudio.PyAudio()
+        stream = p.open(format=FORMAT,
+                       channels=CHANNELS,
+                       rate=RATE,
+                       input=True,
+                       frames_per_buffer=CHUNK)
         
-        if audio_frames:
-            # 將音頻幀轉換為 numpy 數組
-            audio_data = np.concatenate([frame.to_ndarray() for frame in audio_frames])
-            
-            # 將音頻數據保存為 WAV 文件
-            audio_bytes = io.BytesIO()
-            sf.write(audio_bytes, audio_data, 44100, format='WAV')
-            audio_bytes.seek(0)
+        st.session_state.recording = True
+        st.session_state.audio_data = []
+        
+        while st.session_state.recording:
+            data = stream.read(CHUNK)
+            st.session_state.audio_data.append(data)
+        
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button('開始錄音'):
+            st.session_state.recording = True
+            record_audio()
+    
+    with col2:
+        if st.button('停止錄音'):
+            st.session_state.recording = False
+    
+    if st.session_state.audio_data:
+        # 創建臨時文件來保存音頻
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
+            wf = wave.open(temp_file.name, 'wb')
+            wf.setnchannels(CHANNELS)
+            wf.setsampwidth(pyaudio.PyAudio().get_sample_size(FORMAT))
+            wf.setframerate(RATE)
+            wf.writeframes(b''.join(st.session_state.audio_data))
+            wf.close()
             
             # 顯示音頻播放器
-            st.audio(audio_bytes, format='audio/wav')
+            st.audio(temp_file.name, format='audio/wav')
             
             # 將音頻數據保存到 session state
-            st.session_state['recorded_audio'] = audio_bytes.getvalue()
+            with open(temp_file.name, 'rb') as f:
+                st.session_state['recorded_audio'] = f.read()
+            
+            # 刪除臨時文件
+            os.unlink(temp_file.name)
 
 # Upload Page
 if selected == "Upload":
