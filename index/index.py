@@ -65,26 +65,37 @@ def summarize_audio(tr_response):
 if selected == "Record":
     st.title('錄音功能')
     
-    # 使用 audiorecorder 元件
-    audio_data = audiorecorder("開始錄音", "停止錄音")
-    
-    if len(audio_data) > 0:
-        # 顯示錄音時間
-        st.write(f"錄音長度: {len(audio_data)/1000:.1f} 秒")
-        
-        # 播放錄音
-        st.audio(audio_data.export().read())
-        
-        # 儲存錄音到 session state
-        st.session_state['recorded_audio'] = audio_data.export().read()
-        
-        # 提供下載按鈕
-        st.download_button(
-            label="下載錄音檔案",
-            data=st.session_state['recorded_audio'],
-            file_name=f"recording_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.wav",
-            mime="audio/wav"
-        )
+    st.set_page_config(page_title="語音錄音器", layout="centered")
+
+st.title("🎤 即時錄音系統")
+st.markdown("使用下方錄音按鈕開始錄音，完成後可下載音訊檔。")
+
+# 使用 audiorecorder 元件
+audio = audiorecorder("▶️ 開始錄音", "⏹️ 停止錄音")
+
+# 顯示錄音時間（簡易實作）
+start_time = st.session_state.get("start_time", None)
+
+if audio is not None and len(audio) > 0:
+    if not start_time:
+        st.session_state.start_time = time.time()
+
+    end_time = time.time()
+    duration = end_time - st.session_state.start_time
+    st.success(f"🕒 錄音時間：{duration:.2f} 秒")
+
+    # 顯示音訊播放器
+    st.audio(audio, format="audio/wav")
+
+    # 下載連結
+    b64 = base64.b64encode(audio).decode()
+    href = f'<a href="data:audio/wav;base64,{b64}" download="recording.wav">📥 點此下載錄音檔</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
+    # 重置 start_time
+    st.session_state.start_time = None
+else:
+    st.info("請點選『開始錄音』來錄製語音。")
 
 # Upload Page
 if selected == "Upload":
