@@ -48,14 +48,9 @@ def transcribe_audio():
 def summarize_audio(tr_response):
     if media_file is not None:
         summary_response = openai.ChatCompletion.create(
-            model = 'gpt-3.5-turbo-1106',
-            messages = [
-                {"role": "system", "content": "你是個熟練於把口頭會議整理出重點跟紀錄重要事項的會議紀錄員。"},
-                {"role": "assistant", "content": "是的，我可以協助整理口頭會議的重點並紀錄重要事項。請告訴我您希望突顯的重點，以及是否有特定的格式或要求。我會努力確保記錄準確、清晰且具有易讀性。如果有任何特殊需求或指示，也請隨時告訴我，我會按照您的要求處理會議紀錄。"},
-                {"role": "user", "content": "幫我把會議紀錄根據內容梳理成段落，再根據段落整理出第一個表格為會議摘要，內容須顯示段落主題、約50字摘要，並在表格最後一個行最終結論；第二個表格為待辦清單，根据會議記錄，顯示待辦事項(若沒有則填寫無)、執行者(若沒有則填寫無)"},
-                {"role": "assistant", "content": "當然可以幫您進行這項任務。請提供會議紀錄的內容，我將根據您的要求整理成表格。請提供會議紀錄的文本或內容，我將嘗試協助您處理。"},
-                {"role": "user", "content": "把以下會議記錄按照上面的要求彙整並輸出兩個表格:"+ tr_response}
-            ]
+            model="gpt-4",
+            messages=prompt,
+            temperature=0.5
         )
         return summary_response
 
