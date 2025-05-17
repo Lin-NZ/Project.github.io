@@ -1,5 +1,5 @@
-openai == 0.28
-streamlit_option_menu
+openai>=1.0.0
+streamlit-option-menu
 streamlit
 datetime
-streamlit-audiorec
+streamlit-audiorecorder

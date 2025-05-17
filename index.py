@@ -31,7 +31,7 @@ with st.sidebar:
 
 # Variables
 API_Key = st.secrets["openai_key"] #API Key from OpenAI (Whisper)
-openai.api_key = API_Key # Accessing API Key Globally(ChatGPT)
+client = OpenAI(api_key=API_Key) # 初始化 OpenAI 客戶端
 
 # Session State
 if 'transcribe_response' not in st.session_state:
@@ -42,17 +42,16 @@ if 'summary_response' not in st.session_state:
 # Function
 def transcribe_audio():
     if media_file is not None:
-        transcribe_response = openai.Audio.transcribe(
-            api_key = API_Key,
-            model = model_id,
-            file = media_file,
-            response_format = 'srt'  # text, json, srt, vtt
+        transcribe_response = client.audio.transcriptions.create(
+            model=model_id,
+            file=media_file,
+            response_format='srt'  # text, json, srt, vtt
         )
         return transcribe_response
 
 def summarize_audio(tr_response):
     if media_file is not None:
-        summary_response = openai.ChatCompletion.create(
+        summary_response = client.chat.completions.create(
             model="gpt-4",
             messages=prompt,
             temperature=0.5
@@ -130,7 +129,7 @@ if selected == "Q&A":
                 message_placeholder = st.empty()
                 full_response = ""
                 
-                for response in openai.ChatCompletion.create(
+                for response in client.chat.completions.create(
                     model = "gpt-3.5-turbo-1106",
                     messages = [{"role": m["role"], "content": m["content"]}
                               for m in st.session_state.messages], stream=True):
