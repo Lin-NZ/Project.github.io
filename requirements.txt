@@ -2,5 +2,5 @@ openai>=1.0.0
 streamlit-option-menu
 streamlit
 datetime
-streamlit-audiorecorder==0.0.6
+streamlit-audiorec
 
