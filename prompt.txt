@@ -13,8 +13,6 @@ prompt = [
         "content": (
             "Input Types:\n"
             "- Typed or transcribed meeting notes\n"
-            "- OCR/handwriting-extracted text from whiteboard images or handwritten pages\n\n"
-            "Processing Instructions:\n"
             "1. Extract and logically organize the information into the following structure:\n"
             "   - Meeting Summary: concise overview of key topics and outcomes\n"
             "   - Agenda Items Discussed\n"
