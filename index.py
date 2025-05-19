@@ -83,10 +83,17 @@ if selected == "Record":
 # Upload Page
 if selected == "Upload":
     st.title('Upload')
-    
-    model_id = 'whisper-1' 
-    
-    media_file = st.file_uploader('Upload Audio', type = ('wav', 'mp3', 'mp4'))
+
+    # 音訊上傳元件
+    media_file = st.file_uploader('Upload Audio', type=('wav', 'mp3', 'mp4'))
+
+    if media_file is not None:
+        st.audio(media_file)
+
+        # 將 UploadedFile 儲存為暫存檔案
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            tmp.write(media_file.read())
+            tmp_path = tmp.name
     
     if media_file is not None:  # Check if a file has been uploaded
         if st.button("Transcribe Audio"):
