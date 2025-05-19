@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 import streamlit as st
 import datetime
 import json
-from streamlit_audiorecorder import audiorecorder
+from st_audiorec import st_audiorec
 import tempfile
 import os
 import time
@@ -64,7 +64,7 @@ def summarize_audio(tr_response):
 
 # Record Page
 if selected == "Record":
-    st.title('錄音功能')
+    st.title('Record')
     
     st.set_page_config(page_title="語音錄音器", layout="centered")
 
