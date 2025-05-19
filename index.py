@@ -63,11 +63,14 @@ if selected == "Record":
     st.title("🎤 即時錄音系統")
     st.markdown("使用下方錄音按鈕開始錄音，完成後可下載音訊檔。")
 
-    # 使用 st.audio_input 元件
-    audio_bytes = st.audio_input("請點擊開始錄音", key="audio_recorder")
+       # 錄音功能
+    audio_file = st.audio_input("請點擊開始錄音", key="audio_recorder")
 
-    if audio_bytes is not None:
-        # 顯示音訊播放器
+    if audio_file is not None:
+        # ✅ 讀取檔案內容 (bytes)
+        audio_bytes = audio_file.read()
+
+        # 播放音訊
         st.audio(audio_bytes, format="audio/wav")
 
         # 下載連結
