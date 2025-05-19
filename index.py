@@ -60,9 +60,6 @@ def summarize_audio(tr_response):
 # Record Page
 if selected == "Record":
     st.title('Record')
-    
-    st.set_page_config(page_title="語音錄音器", layout="centered")
-
     st.title("🎤 即時錄音系統")
     st.markdown("使用下方錄音按鈕開始錄音，完成後可下載音訊檔。")
 
