@@ -1,12 +1,7 @@
 from openai import OpenAI
 from streamlit_option_menu import option_menu
 import streamlit as st
-import datetime
 import json
-from st_audiorec import st_audiorec
-import tempfile
-import os
-import time
 import base64
 
 
